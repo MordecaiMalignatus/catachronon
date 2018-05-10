@@ -10,8 +10,8 @@ use Mix.Config
 
 config :catachronon, Catachronon.Mailer,
   adapter: Bamboo.MailgunAdapter,
-  api_key: System.get_env("MAILGUN_DOMAIN_NAME"),
-  domain: System.get_env("MAILGUN_API_KEY")
+  domain: System.get_env("MAILGUN_DOMAIN_NAME"),
+  api_key: System.get_env("MAILGUN_API_KEY")
 
 # You can configure your application as:
 #
