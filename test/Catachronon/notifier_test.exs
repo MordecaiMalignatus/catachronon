@@ -5,7 +5,11 @@ defmodule Catachronon.NotifierTest do
 
   test "Simple emails being created correctly" do
     email =
-      Catachronon.send_email("This is a test header", "this is a test body", "test@malignat.us")
+      Notifier.make_email(
+        "This is a test header",
+        "this is a test body",
+        "test@malignat.us"
+      )
 
     assert email.from == {"Catachronon", "catachronon@malignat.us"}
   end

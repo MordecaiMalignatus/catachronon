@@ -8,7 +8,7 @@ defmodule Catachronon.Notifier do
   @doc """
   Creates new email struct and fills in the "from" field. 
   """
-  def send_email(subject, body, target) do
+  def make_email(subject, body, target) do
     Email.new_email()
     |> Email.to(target)
     |> Email.from({"Catachronon", "catachronon@malignat.us"})
@@ -20,7 +20,7 @@ defmodule Catachronon.Notifier do
   Creates email and immediately send it. 
   """
   def send_email!(subject, body, target) do
-    mail = send_email(subject, body, target)
+    mail = make_email(subject, body, target)
     Catachronon.Mailer.deliver_later(mail)
   end
 end
