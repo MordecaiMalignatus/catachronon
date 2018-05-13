@@ -4,6 +4,7 @@ defmodule Catachronon.Notifier do
   sending the emails.
   """
   alias Bamboo.Email
+  alias Catachronon.Mailer
 
   @doc """
   Creates new email struct and fills in the "from" field. 
@@ -21,6 +22,6 @@ defmodule Catachronon.Notifier do
   """
   def send_email!(subject, body, target) do
     mail = make_email(subject, body, target)
-    Catachronon.Mailer.deliver_later(mail)
+    Mailer.deliver_later(mail)
   end
 end
