@@ -73,6 +73,19 @@ defmodule Catachronon.Scanner.Parser do
 
   """
   def parse_line("- " <> body) do
+    [title | content] = String.split(body, ":")
+
+    body =
+      content
+      |> Enum.map(&String.trim/1)
+      |> Enum.join(" ")
+
+    fixed_title =
+      title
+      |> String.downcase()
+      |> String.to_atom()
+
+    {fixed_title, body}
   end
 
   def parse_line(line) do
