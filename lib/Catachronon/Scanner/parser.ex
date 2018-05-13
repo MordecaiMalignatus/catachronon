@@ -17,10 +17,27 @@ defmodule Catachronon.Scanner.Parser do
   - due: $timestamp
   """
 
+  @doc """
+  Parses a file into a Task. This is responsible for turning Files into things
+  Catachronon can work with.
+
+  ## Examples: 
+
+  iex> Parser.parse_file "- Title: Hi!\\nThis is\\n- Target: hello@test.com\\nSome Body Once Told Me"
+  %Catachronon.Task{
+    body: "This is\\nSome Body Once Told Me",
+    title: "Hi!",
+    to: "hello@test.com", 
+    from: {"Catachronon", "catachronon@malignat.us"},
+    time: "2050-01-01T00:00:00",
+    recurring: :not_recurring
+  }
+
+  """
   def parse_file(file_body) do
     file_body
     |> lines
-    |> parse_line
+    |> Enum.map(&parse_line/1)
     |> Enum.into(%{})
     |> Enum.filter(fn {_, body} -> body != "" end)
     |> join_body_lines([])
