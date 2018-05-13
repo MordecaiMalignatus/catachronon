@@ -9,3 +9,7 @@ end
 task :format do
   sh 'mix format'
 end
+
+task :credo do
+  sh 'mix credo --strict'
+end
