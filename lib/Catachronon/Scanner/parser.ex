@@ -93,7 +93,7 @@ defmodule Catachronon.Scanner.Parser do
   end
 
   def join_body_lines([{:body, text} | tl], acc) do
-    join_body_lines(tl, %{acc | :body => acc[:body] <> " " <> text})
+    join_body_lines(tl, %{acc | :body => acc[:body] <> "\n" <> text})
   end
 
   def join_body_lines([{key, value} | tl], acc) do
