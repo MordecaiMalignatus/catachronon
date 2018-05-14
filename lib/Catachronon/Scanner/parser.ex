@@ -40,7 +40,7 @@ defmodule Catachronon.Scanner.Parser do
     |> Enum.map(&parse_line/1)
     |> Enum.into(%{})
     |> Enum.filter(fn {_, body} -> body != "" end)
-    |> join_body_lines([])
+    |> join_body_lines(%{})
     |> to_struct
   end
 
@@ -92,8 +92,13 @@ defmodule Catachronon.Scanner.Parser do
     {:body, line}
   end
 
+  def join_body_lines([{:body, text} | tl], %{body: previous_body} = acc) do
+    updated_acc = %{acc | body: previous_body <> "\n" <> text}
+    join_body_lines(tl, updated_acc)
+  end
+
   def join_body_lines([{:body, text} | tl], acc) do
-    join_body_lines(tl, %{acc | :body => acc[:body] <> "\n" <> text})
+    join_body_lines(tl, Map.put(acc, :body, text))
   end
 
   def join_body_lines([{key, value} | tl], acc) do
