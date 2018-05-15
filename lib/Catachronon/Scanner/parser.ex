@@ -135,7 +135,7 @@ defmodule Catachronon.Scanner.Parser do
   end
 
   def to_task_struct([{key, value} | tl], struct) do
-    to_task_struct(tl, %{struct | key: value})    
+    to_task_struct(tl, %{struct | key => value})    
   end
 
   def to_task_struct([], struct) do
