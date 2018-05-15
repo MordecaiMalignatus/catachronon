@@ -41,7 +41,9 @@ defmodule Catachronon.Scanner.Parser do
     |> Enum.into(%{})
     |> Enum.filter(fn {_, body} -> body != "" end)
     |> join_body_lines(%{})
-    |> to_struct
+    |> take_relevant_items
+    |> Map.to_list
+    |> to_task_struct
   end
 
   @doc """
@@ -111,7 +113,32 @@ defmodule Catachronon.Scanner.Parser do
 
   def join_body_lines([], acc), do: acc
 
-  def to_struct([{key, value} | tl]) do
-    raise "Unimplemented"
+  def take_relevant_items(map) do
+    relevant_keys = [
+      :body, 
+      :title, 
+      :from,
+      :to,
+      :recurring, 
+      :time
+    ]
+
+    Map.take(map, relevant_keys)
+  end
+
+  def to_task_struct(keyword_list) do
+    to_task_struct(keyword_list, %Catachronon.Task{}) 
+  end
+
+  def to_task_struct([{_, nil} | tl], struct) do
+    to_task_struct(tl, struct)  
+  end
+
+  def to_task_struct([{key, value} | tl], struct) do
+    to_task_struct(tl, %{struct | key: value})    
+  end
+
+  def to_task_struct([], struct) do
+    struct
   end
 end
