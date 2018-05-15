@@ -23,7 +23,7 @@ defmodule Catachronon.Scanner.Parser do
 
   ## Examples: 
 
-  iex> Parser.parse_file "- Title: Hi!\\nThis is\\n- Target: hello@test.com\\nSome Body Once Told Me"
+  iex> Parser.parse_file "- Title: Hi!\\nThis is\\n- To: hello@test.com\\nSome Body Once Told Me"
   %Catachronon.Task{
     body: "This is\\nSome Body Once Told Me",
     title: "Hi!",
@@ -42,7 +42,7 @@ defmodule Catachronon.Scanner.Parser do
     |> Enum.filter(fn {_, body} -> body != "" end)
     |> join_body_lines(%{})
     |> take_relevant_items
-    |> Map.to_list
+    |> Map.to_list()
     |> to_task_struct
   end
 
@@ -94,6 +94,12 @@ defmodule Catachronon.Scanner.Parser do
     {:body, line}
   end
 
+  @doc """
+  Joins the body lines in the Task. 
+
+  iex> Parser.join_body_lines([{:body, "Hello there"}], %{body: "Previously on..."})
+  %{body: "Previously on...\\nHello there"}
+  """
   def join_body_lines([{:body, text} | tl], %{body: previous_body} = acc) do
     updated_acc = %{acc | body: previous_body <> "\n" <> text}
     join_body_lines(tl, updated_acc)
@@ -115,11 +121,11 @@ defmodule Catachronon.Scanner.Parser do
 
   def take_relevant_items(map) do
     relevant_keys = [
-      :body, 
-      :title, 
+      :body,
+      :title,
       :from,
       :to,
-      :recurring, 
+      :recurring,
       :time
     ]
 
@@ -127,15 +133,15 @@ defmodule Catachronon.Scanner.Parser do
   end
 
   def to_task_struct(keyword_list) do
-    to_task_struct(keyword_list, %Catachronon.Task{}) 
+    to_task_struct(keyword_list, %Catachronon.Task{})
   end
 
   def to_task_struct([{_, nil} | tl], struct) do
-    to_task_struct(tl, struct)  
+    to_task_struct(tl, struct)
   end
 
   def to_task_struct([{key, value} | tl], struct) do
-    to_task_struct(tl, %{struct | key => value})    
+    to_task_struct(tl, %{struct | key => value})
   end
 
   def to_task_struct([], struct) do
