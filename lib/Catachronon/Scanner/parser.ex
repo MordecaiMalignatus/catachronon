@@ -21,18 +21,7 @@ defmodule Catachronon.Scanner.Parser do
   Parses a file into a Task. This is responsible for turning Files into things
   Catachronon can work with.
 
-  ## Examples: 
-
-  iex> Parser.parse_file "- Title: Hi!\\nThis is\\n- To: hello@test.com\\nSome Body Once Told Me"
-  %Catachronon.Task{
-    body: "This is\\nSome Body Once Told Me",
-    title: "Hi!",
-    to: "hello@test.com", 
-    from: {"Catachronon", "catachronon@malignat.us"},
-    time: "2050-01-01T00:00:00",
-    recurring: :not_recurring
-  }
-
+  This is littered with proper examples in the test file.
   """
   def parse_file(file_body) do
     file_body
@@ -68,7 +57,7 @@ defmodule Catachronon.Scanner.Parser do
   {:body, ""}
 
   iex> Parser.parse_line("- ")
-  {:body, "- "}
+  {:"", ""}
 
   iex> Parser.parse_line("Hello there, I'm a mail body")
   {:body, "Hello there, I'm a mail body"}
@@ -119,6 +108,11 @@ defmodule Catachronon.Scanner.Parser do
 
   def join_body_lines([], acc), do: acc
 
+  @doc """
+  Extract relevant struct items from parsed map. This drops any and all
+  unsupported keys irrecoverably, so if the struct later expands, the data is
+  not held.
+  """
   def take_relevant_items(map) do
     relevant_keys = [
       :body,
