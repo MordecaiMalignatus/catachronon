@@ -12,11 +12,13 @@ defmodule Catachronon.Scanner.ParserTest do
 
   describe "End-to-End parsing of whole files" do
     test "Should parse a file with interspersed body lines correctly." do
-      res = Parser.parse_file "- Title: Hi!\nThis is\n- To: hello@test.com\nSome Body Once Told Me"
+      res =
+        Parser.parse_file("- Title: Hi!\nThis is\n- To: hello@test.com\nSome Body Once Told Me")
+
       expected = %Catachronon.Task{
         body: "This is\nSome Body Once Told Me",
         title: "Hi!",
-        to: "hello@test.com", 
+        to: "hello@test.com",
         from: {"Catachronon", "catachronon@malignat.us"},
         time: "2050-01-01T00:00:00",
         recurring: :not_recurring

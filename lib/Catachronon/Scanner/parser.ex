@@ -27,9 +27,9 @@ defmodule Catachronon.Scanner.Parser do
     file_body
     |> lines
     |> Enum.map(&parse_line/1)
-    |> Enum.into(%{})
     |> Enum.filter(fn {_, body} -> body != "" end)
     |> join_body_lines(%{})
+    |> Enum.into(%{})
     |> take_relevant_items
     |> Map.to_list()
     |> to_task_struct
