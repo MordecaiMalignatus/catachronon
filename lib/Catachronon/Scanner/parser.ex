@@ -27,7 +27,6 @@ defmodule Catachronon.Scanner.Parser do
     file_body
     |> lines
     |> Enum.map(&parse_line/1)
-    |> Enum.filter(fn {_, body} -> body != "" end)
     |> join_body_lines(%{})
     |> Enum.into(%{})
     |> take_relevant_items
@@ -69,7 +68,7 @@ defmodule Catachronon.Scanner.Parser do
     body =
       content
       |> Enum.map(&String.trim/1)
-      |> Enum.join(" ")
+      |> Enum.join(":")
 
     fixed_title =
       title

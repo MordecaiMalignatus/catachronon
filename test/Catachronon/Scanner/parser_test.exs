@@ -26,5 +26,28 @@ defmodule Catachronon.Scanner.ParserTest do
 
       assert res === expected
     end
+
+    test "Should parse a realistic practical example" do
+      input = """
+      - title: Hello there. 
+      - to: test@example.com
+      - time: 2018-01-01 12:00
+      <h1>Hello there!</h1>
+
+      This is our exclusive, testing-only chance to get in on... Stuff.
+      """
+
+      expected = %Catachronon.Task{
+        title: "Hello there.",
+        to: "test@example.com",
+        time: "2018-01-01 12:00",
+        body:
+          "<h1>Hello there!</h1>\n\nThis is our exclusive, testing-only chance to get in on... Stuff.\n",
+        from: {"Catachronon", "catachronon@malignat.us"},
+        recurring: :not_recurring
+      }
+
+      assert Parser.parse_file(input) == expected
+    end
   end
 end
