@@ -1,5 +1,5 @@
-defmodule Catachronon.Scanner.ParserTest do
-  alias Catachronon.Scanner.Parser
+defmodule Catachronon.Parser.ParserTest do
+  alias Catachronon.Parser.Parser
   use ExUnit.Case
   doctest Parser
 
@@ -29,7 +29,7 @@ defmodule Catachronon.Scanner.ParserTest do
 
     test "Should parse a realistic practical example" do
       input = """
-      - title: Hello there. 
+      - title: Hello there.
       - to: test@example.com
       - time: 2018-01-01 12:00
       <h1>Hello there!</h1>

@@ -1,15 +1,15 @@
-defmodule Catachronon.Scanner.Parser do
+defmodule Catachronon.Parser.Parser do
   @moduledoc """
   This is the module responsible for parsing my reminders and recurring things
-  files. It's a pretty simple file format: 
+  files. It's a pretty simple file format:
 
-  - One KV-pair per line, 
+  - One KV-pair per line,
   - Keys start with "- $key" in a yaml-like format
   - Special keys determine end result
-  - Rest is just a flat file. 
-  - "Body" lines get joined. 
+  - Rest is just a flat file.
+  - "Body" lines get joined.
 
-  List of special keys: 
+  List of special keys:
 
   - recurring: $number $interval
   - to: $email
@@ -35,7 +35,7 @@ defmodule Catachronon.Scanner.Parser do
   end
 
   @doc """
-  Simply splits a text into lines. 
+  Simply splits a text into lines.
 
   iex> Parser.lines "Foo\\nbar"
   ["Foo", "bar"]
@@ -83,7 +83,7 @@ defmodule Catachronon.Scanner.Parser do
   end
 
   @doc """
-  Joins the body lines in the Task. 
+  Joins the body lines in the Task.
 
   iex> Parser.join_body_lines([{:body, "Hello there"}], %{body: "Previously on..."})
   %{body: "Previously on...\\nHello there"}
